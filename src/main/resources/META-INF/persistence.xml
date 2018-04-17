@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="TestAuditPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.mycompany.soapserv.db.Movie</class>
+    <class>com.mycompany.soapserv.moviedto.RsiSeat</class>
+    <class>com.mycompany.soapserv.moviedto.RsiReservation</class>
+    <class>com.mycompany.soapserv.moviedto.RsiMovie</class>
+    <class>com.mycompany.soapserv.moviedto.RsiClient</class>
+    <class>com.mycompany.soapserv.moviedto.RsiSeatReserved</class>
+    <class>com.mycompany.soapserv.moviedto.RsiScreening</class>
+    <class>com.mycompany.soapserv.moviedto.RsiAuditorium</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/baza2"/>
+      <property name="javax.persistence.jdbc.password" value="app"/>
+      <property name="javax.persistence.jdbc.user" value="app"/>
+      <property name="eclipselink.logging.level" value="WARNING"/>
+    </properties>
+  </persistence-unit>
+</persistence>

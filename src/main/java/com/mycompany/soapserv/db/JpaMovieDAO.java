@@ -8,6 +8,7 @@ package com.mycompany.soapserv.db;
 import com.mycompany.soapserv.moviedto.RsiMovie;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class JpaMovieDAO extends GenericJpaDao<RsiMovie, Integer> implements MovieDAO {
     @Override
@@ -26,8 +27,8 @@ public class JpaMovieDAO extends GenericJpaDao<RsiMovie, Integer> implements Mov
     @Override
     public List findAllMovies() {
         EntityManager em = getEntityManager();
-        List movies = em.createQuery("select m from Movie m").getResultList();
-        em.close();
-        return movies;
+        TypedQuery<RsiMovie> query = em.createNamedQuery("RsiMovie.findAll", RsiMovie.class);
+        List<RsiMovie> results = query.getResultList();
+        return results;
     }
 }

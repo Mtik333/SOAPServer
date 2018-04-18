@@ -6,6 +6,7 @@
 package com.mycompany.soapserv.db;
 
 import com.mycompany.soapserv.moviedto.RsiReservation;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,5 @@ import com.mycompany.soapserv.moviedto.RsiReservation;
  */
 public interface ReservationDAO extends GenericDao<RsiReservation, Integer>{
     
+    List findAll();
 }

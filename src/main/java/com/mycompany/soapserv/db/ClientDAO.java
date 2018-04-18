@@ -6,12 +6,14 @@
 package com.mycompany.soapserv.db;
 
 import com.mycompany.soapserv.moviedto.RsiClient;
+import java.util.List;
 
 /**
  *
  * @author Mateusz
  */
 public interface ClientDAO extends GenericDao<RsiClient, Integer>{
+    List findAll();
     
     RsiClient findByUsernamePassword(String username, String password);
 }

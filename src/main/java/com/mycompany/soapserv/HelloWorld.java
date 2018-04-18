@@ -1,6 +1,12 @@
 package com.mycompany.soapserv;
 
 import com.mycompany.soapserv.moviedto.RsiAuditorium;
+import com.mycompany.soapserv.moviedto.RsiClient;
+import com.mycompany.soapserv.moviedto.RsiMovie;
+import com.mycompany.soapserv.moviedto.RsiReservation;
+import com.mycompany.soapserv.moviedto.RsiScreening;
+import com.mycompany.soapserv.moviedto.RsiSeat;
+import com.mycompany.soapserv.moviedto.RsiSeatReserved;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -23,6 +29,24 @@ public interface HelloWorld {
     
     @WebMethod
     List<RsiAuditorium> getAuditoriums();
+    
+    @WebMethod
+    List<RsiClient> getClients();
+    
+    @WebMethod
+    List<RsiMovie> getMovies();
+    
+    @WebMethod
+    List<RsiReservation> getReservations();
+    
+    @WebMethod
+    List<RsiScreening> getScreenings();
+    
+    @WebMethod
+    List<RsiSeat> getSeats();
+    
+    @WebMethod
+    List<RsiSeatReserved> getReservedSeats();
     
     @WebMethod
     Boolean authenticateClient() throws InvalidPasswordException;

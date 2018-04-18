@@ -6,6 +6,7 @@
 package com.mycompany.soapserv.db;
 
 import com.mycompany.soapserv.moviedto.RsiSeat;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,5 @@ import com.mycompany.soapserv.moviedto.RsiSeat;
  */
 public interface SeatDAO extends GenericDao<RsiSeat, Integer>{
     
+    List findAll();
 }

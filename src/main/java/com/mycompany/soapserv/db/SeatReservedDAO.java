@@ -6,11 +6,14 @@
 package com.mycompany.soapserv.db;
 
 import com.mycompany.soapserv.moviedto.RsiSeatReserved;
+import java.util.List;
 
 /**
  *
  * @author Mateusz
  */
 public interface SeatReservedDAO extends GenericDao<RsiSeatReserved, Integer>{
+    
+    List findAll();
     
 }

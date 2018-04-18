@@ -6,11 +6,20 @@
 package com.mycompany.soapserv.db;
 
 import com.mycompany.soapserv.moviedto.RsiSeatReserved;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  *
  * @author Mateusz
  */
 public class JpaSeatReservedDAO extends GenericJpaDao<RsiSeatReserved, Integer> implements SeatReservedDAO {
-    
+    @Override
+    public List findAll() {
+        EntityManager em = getEntityManager();
+        TypedQuery<RsiSeatReserved> query = em.createNamedQuery("RsiSeatReserved.findAll", RsiSeatReserved.class);
+        List<RsiSeatReserved> results = query.getResultList();
+        return results;
+    }
 }

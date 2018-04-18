@@ -6,6 +6,7 @@
 package com.mycompany.soapserv.db;
 
 import com.mycompany.soapserv.moviedto.RsiScreening;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,5 @@ import com.mycompany.soapserv.moviedto.RsiScreening;
  */
 public interface ScreeningDAO extends GenericDao<RsiScreening, Integer>{
     
+    List findAll();
 }

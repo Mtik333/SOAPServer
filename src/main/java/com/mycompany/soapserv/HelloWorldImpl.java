@@ -6,6 +6,10 @@ import com.mycompany.soapserv.db.ClientDAO;
 import com.mycompany.soapserv.db.JpaAuditoriumDAO;
 import com.mycompany.soapserv.db.JpaClientDAO;
 import com.mycompany.soapserv.db.JpaMovieDAO;
+import com.mycompany.soapserv.db.JpaReservationDAO;
+import com.mycompany.soapserv.db.JpaScreeningDAO;
+import com.mycompany.soapserv.db.JpaSeatDAO;
+import com.mycompany.soapserv.db.JpaSeatReservedDAO;
 import com.mycompany.soapserv.db.MovieDAO;
 import com.mycompany.soapserv.db.ReservationDAO;
 import com.mycompany.soapserv.db.ScreeningDAO;
@@ -14,6 +18,10 @@ import com.mycompany.soapserv.db.SeatReservedDAO;
 import com.mycompany.soapserv.moviedto.RsiAuditorium;
 import com.mycompany.soapserv.moviedto.RsiClient;
 import com.mycompany.soapserv.moviedto.RsiMovie;
+import com.mycompany.soapserv.moviedto.RsiReservation;
+import com.mycompany.soapserv.moviedto.RsiScreening;
+import com.mycompany.soapserv.moviedto.RsiSeat;
+import com.mycompany.soapserv.moviedto.RsiSeatReserved;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +130,42 @@ public class HelloWorldImpl implements HelloWorld {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<RsiClient> getClients() {
+        this.clientDao = new JpaClientDAO();
+        return clientDao.findAll();
+    }
+
+    @Override
+    public List<RsiMovie> getMovies() {
+        this.movieDAO = new JpaMovieDAO();
+        return movieDAO.findAllMovies();
+    }
+
+    @Override
+    public List<RsiReservation> getReservations() {
+        this.reservationDao = new JpaReservationDAO();
+        return reservationDao.findAll();
+    }
+
+    @Override
+    public List<RsiScreening> getScreenings() {
+        this.screeningDao = new JpaScreeningDAO();
+        return screeningDao.findAll();
+    }
+
+    @Override
+    public List<RsiSeat> getSeats() {
+        this.seatDao = new JpaSeatDAO();
+        return seatDao.findAll();
+    }
+
+    @Override
+    public List<RsiSeatReserved> getReservedSeats() {
+        this.seatRDao = new JpaSeatReservedDAO();
+        return seatRDao.findAll();
     }
 
 }

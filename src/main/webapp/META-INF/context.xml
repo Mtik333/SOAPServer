@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/SOAPServer" reloadable="true"/>
+<Context path="/SOAPServer" reloadable="true">
+  <Resource auth="Container" driverClassName="org.apache.derby.jdbc.ClientDriver" maxActive="20" maxIdle="10" maxWait="-1" name="baza2" password="app" type="javax.sql.DataSource" url="jdbc:derby://localhost:1527/baza2" username="app"/>
+</Context>

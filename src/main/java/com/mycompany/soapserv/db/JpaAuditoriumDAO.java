@@ -8,6 +8,7 @@ package com.mycompany.soapserv.db;
 import com.mycompany.soapserv.moviedto.RsiAuditorium;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -18,9 +19,9 @@ public class JpaAuditoriumDAO extends GenericJpaDao<RsiAuditorium, Integer> impl
     @Override
     public List findAll() {
         EntityManager em = getEntityManager();
-        List movies = em.createQuery("select c from RsiClient c where ").getResultList();
-        em.close();
-        return movies;
+        TypedQuery<RsiAuditorium> query = em.createNamedQuery("RsiAuditorium.findAll", RsiAuditorium.class);
+        List<RsiAuditorium> results = query.getResultList();
+        return results;
     }
     
 }

@@ -17,6 +17,14 @@ import javax.persistence.TypedQuery;
 public class JpaClientDAO extends GenericJpaDao<RsiClient, Integer> implements ClientDAO{
 
     @Override
+    public List findAll() {
+        EntityManager em = getEntityManager();
+        TypedQuery<RsiClient> query = em.createNamedQuery("RsiClient.findAll", RsiClient.class);
+        List<RsiClient> results = query.getResultList();
+        return results;
+    }
+    
+    @Override
     public RsiClient findByUsernamePassword(String username, String password) {
         EntityManager em = getEntityManager();
         TypedQuery<RsiClient> query = em.createNamedQuery("RsiClient.findByUsernamePassword", RsiClient.class);

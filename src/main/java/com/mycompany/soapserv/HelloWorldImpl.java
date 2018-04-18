@@ -22,10 +22,14 @@ import com.mycompany.soapserv.moviedto.RsiReservation;
 import com.mycompany.soapserv.moviedto.RsiScreening;
 import com.mycompany.soapserv.moviedto.RsiSeat;
 import com.mycompany.soapserv.moviedto.RsiSeatReserved;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
@@ -91,8 +95,8 @@ public class HelloWorldImpl implements HelloWorld {
         this.movieDAO.save(m2);
         this.movieDAO.save(m3);
         this.movieDAO.save(m4);
-        
-        for(Object m: this.movieDAO.findAllMovies()) {
+
+        for (Object m : this.movieDAO.findAllMovies()) {
             System.out.println(m.toString());
         }
         System.out.println("new client request for products");
@@ -125,7 +129,7 @@ public class HelloWorldImpl implements HelloWorld {
             password = passList.get(0).toString();
             this.clientDao = new JpaClientDAO();
             RsiClient client = clientDao.findByUsernamePassword(username, password);
-            if (client==null) {
+            if (client == null) {
                 throw new InvalidPasswordException("Secret password - " + password + " - is invalid! - No greetings for you.");
             }
         }
@@ -168,4 +172,15 @@ public class HelloWorldImpl implements HelloWorld {
         return seatRDao.findAll();
     }
 
+    @Override
+    public Image downloadImage(String name) {
+        try {
+            File image = new File("C:\\Users\\Mateusz\\Pictures\\1609695_630897220285476_1662463206_n.jpg");
+            return ImageIO.read(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+
+        }
+    }
 }

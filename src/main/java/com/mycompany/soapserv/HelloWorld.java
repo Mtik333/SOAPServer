@@ -7,6 +7,7 @@ import com.mycompany.soapserv.moviedto.RsiReservation;
 import com.mycompany.soapserv.moviedto.RsiScreening;
 import com.mycompany.soapserv.moviedto.RsiSeat;
 import com.mycompany.soapserv.moviedto.RsiSeatReserved;
+import java.awt.Image;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -51,4 +52,6 @@ public interface HelloWorld {
     @WebMethod
     Boolean authenticateClient() throws InvalidPasswordException;
     
+    @WebMethod
+    Image downloadImage(String name);
 }

@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -60,7 +61,7 @@ public class RsiSeatReserved implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    @XmlTransient
     public RsiReservation getReservationId() {
         return reservationId;
     }
@@ -68,7 +69,7 @@ public class RsiSeatReserved implements Serializable {
     public void setReservationId(RsiReservation reservationId) {
         this.reservationId = reservationId;
     }
-
+    @XmlTransient
     public RsiScreening getScreeningId() {
         return screeningId;
     }
@@ -76,7 +77,7 @@ public class RsiSeatReserved implements Serializable {
     public void setScreeningId(RsiScreening screeningId) {
         this.screeningId = screeningId;
     }
-
+    @XmlTransient
     public RsiSeat getSeatId() {
         return seatId;
     }

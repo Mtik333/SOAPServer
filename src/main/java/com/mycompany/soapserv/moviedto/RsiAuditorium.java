@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -50,8 +51,10 @@ public class RsiAuditorium implements Serializable {
     @NotNull
     @Column(name = "SEATS_NUMBER")
     private int seatsNumber;
+    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auditoriumId")
     private Collection<RsiSeat> rsiSeatCollection;
+    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auditoriumId")
     private Collection<RsiScreening> rsiScreeningCollection;
 

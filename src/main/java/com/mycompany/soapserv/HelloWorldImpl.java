@@ -25,6 +25,7 @@ import com.mycompany.soapserv.moviedto.RsiSeatReserved;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -175,8 +176,12 @@ public class HelloWorldImpl implements HelloWorld {
     @Override
     public Image downloadImage(String name) {
         try {
-            File image = new File("C:\\Users\\Mateusz\\Pictures\\1609695_630897220285476_1662463206_n.jpg");
-            return ImageIO.read(image);
+            File f = new File(HelloWorldImpl.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+            System.out.println(f.getAbsolutePath()+";\n"+f.getCanonicalPath()+"+\n"+f.getPath());
+            File test = new File(f.getPath()+File.separator+"posters"+File.separator+"project.png");
+            System.out.println(test.getPath());
+//            File image = new File("C:\\Users\\Mateusz\\Pictures\\1609695_630897220285476_1662463206_n.jpg");
+            return ImageIO.read(test);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

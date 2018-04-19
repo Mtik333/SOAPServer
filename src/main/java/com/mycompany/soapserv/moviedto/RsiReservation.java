@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -57,6 +58,7 @@ public class RsiReservation implements Serializable {
     @JoinColumn(name = "SCREENING_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private RsiScreening screeningId;
+    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservationId")
     private Collection<RsiSeatReserved> rsiSeatReservedCollection;
 
@@ -98,7 +100,7 @@ public class RsiReservation implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
+    @XmlTransient
     public RsiClient getClientReserverId() {
         return clientReserverId;
     }
@@ -106,7 +108,7 @@ public class RsiReservation implements Serializable {
     public void setClientReserverId(RsiClient clientReserverId) {
         this.clientReserverId = clientReserverId;
     }
-
+    @XmlTransient
     public RsiScreening getScreeningId() {
         return screeningId;
     }

@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -53,6 +54,7 @@ public class RsiSeat implements Serializable {
     @JoinColumn(name = "AUDITORIUM_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private RsiAuditorium auditoriumId;
+    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "seatId")
     private Collection<RsiSeatReserved> rsiSeatReservedCollection;
 
@@ -92,7 +94,7 @@ public class RsiSeat implements Serializable {
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
-
+    @XmlTransient
     public RsiAuditorium getAuditoriumId() {
         return auditoriumId;
     }

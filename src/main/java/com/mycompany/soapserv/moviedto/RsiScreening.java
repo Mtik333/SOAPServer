@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -47,8 +48,10 @@ public class RsiScreening implements Serializable {
     @Column(name = "SCREENING_START")
     @Temporal(TemporalType.TIMESTAMP)
     private Date screeningStart;
+    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "screeningId")
     private Collection<RsiReservation> rsiReservationCollection;
+    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "screeningId")
     private Collection<RsiSeatReserved> rsiSeatReservedCollection;
     @JoinColumn(name = "AUDITORIUM_ID", referencedColumnName = "ID")
@@ -98,7 +101,7 @@ public class RsiScreening implements Serializable {
     public void setRsiSeatReservedCollection(Collection<RsiSeatReserved> rsiSeatReservedCollection) {
         this.rsiSeatReservedCollection = rsiSeatReservedCollection;
     }
-
+    @XmlTransient
     public RsiAuditorium getAuditoriumId() {
         return auditoriumId;
     }
@@ -106,7 +109,7 @@ public class RsiScreening implements Serializable {
     public void setAuditoriumId(RsiAuditorium auditoriumId) {
         this.auditoriumId = auditoriumId;
     }
-
+    @XmlTransient
     public RsiMovie getMovieId() {
         return movieId;
     }

@@ -188,4 +188,12 @@ public class HelloWorldImpl implements HelloWorld {
 
         }
     }
+
+    @Override
+    public void createReservation(RsiReservation rsiReservation) {
+        this.reservationDao = new JpaReservationDAO();
+        reservationDao.save(rsiReservation);
+    }
+    
+    
 }

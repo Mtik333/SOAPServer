@@ -56,5 +56,5 @@ public interface HelloWorld {
     Image downloadImage(String name);
     
     @WebMethod
-    void createReservation(RsiReservation rsiReservation);
+    void createReservation(RsiReservation reservationId, RsiSeat rsiSeat);
 }

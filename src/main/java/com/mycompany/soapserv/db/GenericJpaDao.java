@@ -8,8 +8,6 @@ package com.mycompany.soapserv.db;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import javax.persistence.EntityManager;
-import com.mycompany.soapserv.db.GenericDao;
-import com.mycompany.soapserv.db.JpaFactory;
 
 public class GenericJpaDao<T, K> implements GenericDao<T, K> {
 
@@ -22,12 +20,14 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
     }
 
     @Override
-    public void save(T t) {
+    public T save(T t) {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         em.persist(t);
+        em.flush();
         em.getTransaction().commit();
         em.close();
+        return t;
     }
 
     @Override

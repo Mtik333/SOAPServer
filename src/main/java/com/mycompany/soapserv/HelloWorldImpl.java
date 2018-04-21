@@ -25,7 +25,6 @@ import com.mycompany.soapserv.moviedto.RsiSeatReserved;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -190,9 +189,15 @@ public class HelloWorldImpl implements HelloWorld {
     }
 
     @Override
-    public void createReservation(RsiReservation rsiReservation) {
+    public void createReservation(RsiReservation reservationId, RsiSeat rsiSeat) {
         this.reservationDao = new JpaReservationDAO();
-        reservationDao.save(rsiReservation);
+        reservationId = reservationDao.save(reservationId);
+        this.seatRDao = new JpaSeatReservedDAO();
+        RsiSeatReserved rsiSeatReserved = new RsiSeatReserved();
+        rsiSeatReserved.setReservationId(reservationId);
+        rsiSeatReserved.setScreeningId(reservationId.getScreeningId());
+        rsiSeatReserved.setSeatId(rsiSeat);
+        seatRDao.save(rsiSeatReserved);
     }
     
     

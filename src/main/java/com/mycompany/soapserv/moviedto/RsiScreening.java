@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -41,6 +43,7 @@ public class RsiScreening implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -48,15 +51,15 @@ public class RsiScreening implements Serializable {
     @Column(name = "SCREENING_START")
     @Temporal(TemporalType.TIMESTAMP)
     private Date screeningStart;
-    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "screeningId")
     private Collection<RsiReservation> rsiReservationCollection;
-    @XmlElement
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "screeningId")
     private Collection<RsiSeatReserved> rsiSeatReservedCollection;
+    @XmlElement
     @JoinColumn(name = "AUDITORIUM_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private RsiAuditorium auditoriumId;
+    @XmlElement
     @JoinColumn(name = "MOVIE_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private RsiMovie movieId;

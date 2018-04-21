@@ -6,7 +6,7 @@ package com.mycompany.soapserv.db;
 
 public interface GenericDao<T, K> {
 
-    void save(T t);
+    T save(T t);
 
     void delete(T t);
 

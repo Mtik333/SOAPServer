@@ -192,4 +192,13 @@ public class HelloWorldImpl implements HelloWorld {
         reservationDao.delete(reservationId);
     }
 
+    @Override
+    public void changeReservation(RsiReservation reservation, RsiSeat rsiSeat) {
+        this.reservationDao = new JpaReservationDAO();
+        this.seatRDao = new JpaSeatReservedDAO();
+        RsiSeatReserved seatReserved = seatRDao.findByReservationId(reservation);
+        seatReserved.setSeatId(rsiSeat);
+        seatRDao.update(seatReserved);
+    }
+
 }

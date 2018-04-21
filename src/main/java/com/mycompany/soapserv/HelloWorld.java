@@ -57,4 +57,7 @@ public interface HelloWorld {
     
     @WebMethod
     void removeReservation(RsiReservation reservationId);
+    
+    @WebMethod
+    void changeReservation(RsiReservation reservation, RsiSeat rsiSeat);
 }

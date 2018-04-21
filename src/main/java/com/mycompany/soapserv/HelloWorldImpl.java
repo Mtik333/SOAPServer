@@ -1,6 +1,13 @@
 package com.mycompany.soapserv;
 
 //Service Implementation
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.mycompany.soapserv.db.AuditoriumDAO;
 import com.mycompany.soapserv.db.ClientDAO;
 import com.mycompany.soapserv.db.JpaAuditoriumDAO;
@@ -24,10 +31,15 @@ import com.mycompany.soapserv.moviedto.RsiSeat;
 import com.mycompany.soapserv.moviedto.RsiSeatReserved;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.jws.WebService;
@@ -48,65 +60,6 @@ public class HelloWorldImpl implements HelloWorld {
     private ScreeningDAO screeningDao;
     private SeatDAO seatDao;
     private SeatReservedDAO seatRDao;
-
-    @Override
-    public String getHelloWorldAsString(String name) throws InvalidPasswordException {
-        MessageContext mctx = wsctx.getMessageContext();
-        Map http_headers = (Map) mctx.get(MessageContext.HTTP_REQUEST_HEADERS);
-        List userList = (List) http_headers.get("Username");
-        List passList = (List) http_headers.get("Password");
-        String username = "";
-        String password = "";
-
-        if (userList != null) {
-            //get username
-            username = userList.get(0).toString();
-        }
-
-        if (passList != null) {
-            //get password
-            password = passList.get(0).toString();
-            if (!"tajne".equals(password)) {
-                throw new InvalidPasswordException("Secret password - " + password + " - is invalid! - No greetings for you.");
-            }
-
-        }
-        System.out.println("new client request foasdr: " + username + "/" + password);
-        return "Witaj świecie JAX-WS: " + name;
-    }
-
-    @Override
-    public List<Product> getProducts() {
-        System.out.println("");
-        System.out.println("asdasdasdsa");
-
-        this.movieDAO = new JpaMovieDAO();
-
-        RsiMovie m1 = new RsiMovie();
-        m1.setTitle("Pirates of the Caribbean: The Curse of the Black Pearl");
-        RsiMovie m2 = new RsiMovie();
-        m2.setTitle("Lord of the Rings: Return of the King");
-        RsiMovie m3 = new RsiMovie();
-        m3.setTitle("The Penguins of Madagascar");
-        RsiMovie m4 = new RsiMovie();
-        m4.setTitle("Hunger Games");
-
-        this.movieDAO.save(m1);
-        this.movieDAO.save(m2);
-        this.movieDAO.save(m3);
-        this.movieDAO.save(m4);
-
-        for (Object m : this.movieDAO.findAllMovies()) {
-            System.out.println(m.toString());
-        }
-        System.out.println("new client request for products");
-        Product p1 = new Product("Asus UX331UN", "i7 8550u 13 cali mx150", 3500);
-        Product p2 = new Product("SNSV NU133XU", "i5 1234 15 cali gt 1500 ti", 3400);
-        List<Product> l = new ArrayList<>();
-        l.add(p1);
-        l.add(p2);
-        return l;
-    }
 
     @Override
     public List<RsiAuditorium> getAuditoriums() {
@@ -176,11 +129,11 @@ public class HelloWorldImpl implements HelloWorld {
     public Image downloadImage(String name) {
         try {
             File f = new File(HelloWorldImpl.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-            System.out.println(f.getAbsolutePath()+";\n"+f.getCanonicalPath()+"+\n"+f.getPath());
-            File test = new File(f.getPath()+File.separator+"posters"+File.separator+"project.png");
+            System.out.println(f.getAbsolutePath() + ";\n" + f.getCanonicalPath() + "+\n" + f.getPath());
+            File test = new File("D:" + File.separator + "posters" + File.separator + name);
             System.out.println(test.getPath());
-//            File image = new File("C:\\Users\\Mateusz\\Pictures\\1609695_630897220285476_1662463206_n.jpg");
-            return ImageIO.read(test);
+            System.out.println(test.getAbsolutePath());
+            return ImageIO.read(test.getAbsoluteFile());
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -199,6 +152,44 @@ public class HelloWorldImpl implements HelloWorld {
         rsiSeatReserved.setSeatId(rsiSeat);
         seatRDao.save(rsiSeatReserved);
     }
-    
-    
+
+    @Override
+    public byte[] pdfReservation(RsiReservation reservation) {
+        try {
+            File file = new File("itext-test.pdf");
+            FileOutputStream fileout = new FileOutputStream(file);
+            Document document = new Document();
+            PdfWriter.getInstance(document, fileout);
+            document.addAuthor("Me");
+            document.addTitle("My iText Test");
+            document.open();
+            Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+            Chunk chunk = new Chunk("Hello World", font);
+            try {
+                document.add(chunk);
+            } catch (DocumentException ex) {
+                Logger.getLogger(HelloWorldImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            document.close();
+            byte[] data = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+            return data;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(HelloWorldImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public void removeReservation(RsiReservation reservationId) {
+        this.reservationDao = new JpaReservationDAO();
+        this.seatRDao = new JpaSeatReservedDAO();
+        RsiSeatReserved seatReserved = seatRDao.findByReservationId(reservationId);
+        seatRDao.delete(seatReserved);
+        reservationDao.delete(reservationId);
+    }
+
 }

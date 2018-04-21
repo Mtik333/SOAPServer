@@ -31,7 +31,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RsiSeatReserved.findAll", query = "SELECT r FROM RsiSeatReserved r")
-    , @NamedQuery(name = "RsiSeatReserved.findById", query = "SELECT r FROM RsiSeatReserved r WHERE r.id = :id")})
+    , @NamedQuery(name = "RsiSeatReserved.findById", query = "SELECT r FROM RsiSeatReserved r WHERE r.id = :id")
+    ,
+    @NamedQuery(name = "RsiSeatReserver.findByReservationId", query = "SELECT r from RsiSeatReserved r WHERE r.reservationId = :reservationId")
+})
 public class RsiSeatReserved implements Serializable {
 
     private static final long serialVersionUID = 1L;

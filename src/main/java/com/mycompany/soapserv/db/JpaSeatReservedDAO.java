@@ -5,6 +5,7 @@
  */
 package com.mycompany.soapserv.db;
 
+import com.mycompany.soapserv.moviedto.RsiReservation;
 import com.mycompany.soapserv.moviedto.RsiSeatReserved;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -21,5 +22,13 @@ public class JpaSeatReservedDAO extends GenericJpaDao<RsiSeatReserved, Integer> 
         TypedQuery<RsiSeatReserved> query = em.createNamedQuery("RsiSeatReserved.findAll", RsiSeatReserved.class);
         List<RsiSeatReserved> results = query.getResultList();
         return results;
+    }
+
+    @Override
+    public RsiSeatReserved findByReservationId(RsiReservation reservation) {
+        EntityManager em = getEntityManager();
+        TypedQuery<RsiSeatReserved> query = em.createNamedQuery("RsiSeatReserver.findByReservationId", RsiSeatReserved.class);
+        query.setParameter("reservationId", reservation);
+        return query.getSingleResult();
     }
 }

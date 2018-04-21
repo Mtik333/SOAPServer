@@ -21,12 +21,6 @@ import javax.jws.soap.SOAPBinding.Use;
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL) //optional
 
 public interface HelloWorld {
-
-    @WebMethod (operationName = "getHelloWorldAsString", exclude = false)
-    String getHelloWorldAsString(String name) throws InvalidPasswordException;
-
-    @WebMethod
-    List<Product> getProducts();
     
     @WebMethod
     List<RsiAuditorium> getAuditoriums();
@@ -57,4 +51,10 @@ public interface HelloWorld {
     
     @WebMethod
     void createReservation(RsiReservation reservationId, RsiSeat rsiSeat);
+    
+    @WebMethod
+    byte[] pdfReservation(RsiReservation reservation);
+    
+    @WebMethod
+    void removeReservation(RsiReservation reservationId);
 }

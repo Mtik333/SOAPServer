@@ -83,6 +83,13 @@ public class VersionHandler implements SOAPHandler<SOAPMessageContext> {
                         throw new SOAPFaultException(soapFault);
                     }
                 }
+                else {
+                    SOAPBody soapBody = soapMsg.getSOAPPart().getEnvelope().getBody();
+                    SOAPFault soapFault = soapBody.addFault();
+                    soapFault.setFaultString("Invalid Property");
+                    System.out.println("error");
+                    throw new SOAPFaultException(soapFault);
+                }
             } catch (SOAPException e) {
                 System.out.println(e);
             } catch (IOException e) {

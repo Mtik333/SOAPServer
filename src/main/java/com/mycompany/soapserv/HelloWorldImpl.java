@@ -45,12 +45,17 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
+import javax.xml.ws.BindingType;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.soap.MTOM;
+import static javax.xml.ws.soap.SOAPBinding.SOAP11HTTP_MTOM_BINDING;
 
 //@WebService(endpointInterface = "com.company.HelloWorld", portName = "test", serviceName = "test", targetNamespace = "test")
 @WebService(endpointInterface = "com.mycompany.soapserv.HelloWorld")
 @HandlerChain(file="handler-chain.xml")
+@MTOM
+@BindingType(value = SOAP11HTTP_MTOM_BINDING)
 public class HelloWorldImpl implements HelloWorld {
 
     @Resource

@@ -43,13 +43,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
 //@WebService(endpointInterface = "com.company.HelloWorld", portName = "test", serviceName = "test", targetNamespace = "test")
 @WebService(endpointInterface = "com.mycompany.soapserv.HelloWorld")
-
+@HandlerChain(file="handler-chain.xml")
 public class HelloWorldImpl implements HelloWorld {
 
     @Resource

@@ -17,7 +17,6 @@ import javax.jws.soap.SOAPBinding.Use;
 
 //Service Endpoint Interface
 @WebService /// ustawia portType w 
-
 @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL) //optional
 
 public interface HelloWorld {

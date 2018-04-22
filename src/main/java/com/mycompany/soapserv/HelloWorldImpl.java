@@ -7,6 +7,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.mycompany.soapserv.db.AuditoriumDAO;
 import com.mycompany.soapserv.db.ClientDAO;
@@ -160,13 +161,32 @@ public class HelloWorldImpl implements HelloWorld {
             FileOutputStream fileout = new FileOutputStream(file);
             Document document = new Document();
             PdfWriter.getInstance(document, fileout);
-            document.addAuthor("Me");
-            document.addTitle("My iText Test");
+            document.addAuthor("RSI Movie");
+            document.addTitle("Reservation no. "+reservation.getId());
             document.open();
             Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-            Chunk chunk = new Chunk("Hello World", font);
+            Chunk chunk = new Chunk("Reservation", font);
+            Chunk chunk2 = new Chunk("Client: "+reservation.getClientReserverId().getUsername());
+            Chunk chunk3 = new Chunk("Movie: "+reservation.getScreeningId().getMovieId().getTitle());
+            Chunk chunk4 = new Chunk("Auditorium: "+reservation.getScreeningId().getAuditoriumId().getName());
+            Chunk chunk5 = new Chunk("Screening time: "+reservation.getScreeningId().getScreeningStart().toString());
+            this.seatRDao = new JpaSeatReservedDAO();
+            RsiSeatReserved seatReserved = seatRDao.findByReservationId(reservation);
+            Chunk chunk6 = new Chunk("Seat: "+seatReserved.getSeatId().getId());
             try {
                 document.add(chunk);
+                Paragraph preface = new Paragraph();
+                preface.add(new Paragraph(" "));
+                document.add(preface);
+                document.add(chunk2);
+                document.add(preface);
+                document.add(chunk3);
+                document.add(preface);
+                document.add(chunk4);
+                document.add(preface);
+                document.add(chunk5);
+                document.add(preface);
+                document.add(chunk6);
             } catch (DocumentException ex) {
                 Logger.getLogger(HelloWorldImpl.class.getName()).log(Level.SEVERE, null, ex);
             }

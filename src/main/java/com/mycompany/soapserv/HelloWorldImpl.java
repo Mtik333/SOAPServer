@@ -170,15 +170,16 @@ public class HelloWorldImpl implements HelloWorld {
             document.addAuthor("RSI Movie");
             document.addTitle("Reservation no. "+reservation.getId());
             document.open();
+            this.seatRDao = new JpaSeatReservedDAO();
+            RsiSeatReserved seatReserved = seatRDao.findByReservationId(reservation);
+            System.out.println(seatReserved.getSeatId());
             Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
             Chunk chunk = new Chunk("Reservation", font);
             Chunk chunk2 = new Chunk("Client: "+reservation.getClientReserverId().getUsername());
             Chunk chunk3 = new Chunk("Movie: "+reservation.getScreeningId().getMovieId().getTitle());
-            Chunk chunk4 = new Chunk("Auditorium: "+reservation.getScreeningId().getAuditoriumId().getName());
+            Chunk chunk4 = new Chunk("Auditorium: "+seatReserved.getScreeningId().getAuditoriumId().getName());
             Chunk chunk5 = new Chunk("Screening time: "+reservation.getScreeningId().getScreeningStart().toString());
-            this.seatRDao = new JpaSeatReservedDAO();
-            RsiSeatReserved seatReserved = seatRDao.findByReservationId(reservation);
-            Chunk chunk6 = new Chunk("Seat: "+seatReserved.getSeatId().getId());
+            Chunk chunk6 = new Chunk("Seat: "+String.valueOf((seatReserved.getSeatId().getSeatNumber() - 1) * 5 + seatReserved.getSeatId().getSeatRow()));
             try {
                 document.add(chunk);
                 Paragraph preface = new Paragraph();
